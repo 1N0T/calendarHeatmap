@@ -4,13 +4,16 @@
 
 Se trata de una función a la que le pasaremos una lista con una serie de valores. Se presupone que cada valor representa el de un día determinado y, es requisito que incluya un valor para día consecutivo desde el día inicial.
 
-El primer valor de la lista, se corresponderá con el del primer día del mes, pero no es necesario que sea el dl primer mes del año. Se puede comenzar desde cualquier mes (pero simepre desde el día 1 del mismo).
+El primer valor de la lista, se corresponderá con el del primer día del mes, pero no es necesario que sea el dl primer mes del año. Se puede comenzar desde cualquier mes (pero simepre desde el día 1 del mismo). En el caso de que no se pudiera cumplir esta condición, por no disponer de valores desde el principio de mes, se deberían insertar **numpy.nan** en la lista, para todos aquellos días desde el inicio para los que no se disponga de un valor.
+
+Por otra parte, si no se disponen de valores hasta el final de un mes, no es necesario completarlos (esta circunstancia ya está controlada en la función). 
 
 Puedes leer [aquí](https://dev.to/1n0t/matplotlib-heatmap-calendar-3kbo) una explicación, paso a paso, del enfoque adoptado.
 
 ### Dependencias.
 La aplicación requiere la instalación de:
  * matplotlib.
+ * numpy.
  
 ### Ejemplos de resultado.
 Podemos mostrar calendario representando valores sólo con el mapa de colores. Pero adicionalmente, podemos añadir una etiqueta con el valor númerio representado y/o el día del mes al que se corresponde.
