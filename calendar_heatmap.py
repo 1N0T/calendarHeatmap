@@ -2,14 +2,19 @@ import calendar
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+from matplotlib.transforms import BlendedGenericTransform
 
 def calendar_heatmap (
         valores,
         year,
         dias_semana = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
         nombres_meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        minimo = None,
+        maximo = None,
         mostrar_dias = True,
         mostrar_valores = True,
+        mostrar_escala_colores = True,
         meses = 12,
         mes_inicial = 1,
         columnas = 4,
@@ -18,6 +23,7 @@ def calendar_heatmap (
         fichero = "calendar_hearmap.pdf"
     ):
 
+    escala = 3.5
     maximo_semanas_mes = 6
 
     # Calculamos el número de filas necesarias, para representar todos los meses indicados
@@ -27,14 +33,18 @@ def calendar_heatmap (
     filas = int(math.ceil(meses / columnas))
 
     # Creamos los subplots necesarios para ocupar todas las filas/columnas del gráfico
-    fig, ax = plt.subplots(filas, columnas, figsize=(3.5*columnas*zoom, 3.5*filas*zoom))
+    fig, ax = plt.subplots(filas, columnas, figsize=(escala*columnas*zoom, escala*filas*zoom))
     
     # Para facilitar la iteración, convertimos la matriz bidimensional de subplots, en una 
     # una matriz unidimensional
     axs = np.array(ax).reshape(-1)
     
     numero_valores = len(valores)
-    maximo = max(valores)
+    if not minimo:
+        minimo = 0
+    if not maximo:  
+        maximo = max(valores)
+
     puntero_dia_actual = 0
     hoja_calendario = 0
 
@@ -140,5 +150,24 @@ def calendar_heatmap (
     # Mostramos como título el año, o los años a los que corresponden los datos
     fig.text(0.5, 0.95, "\n" + str(years) + "\n", fontsize=16*zoom, ha="center")
 
+    # Creamos escala de colores y la mostramos, si así se ha solicitado
+    if mostrar_escala_colores:
+        # Cargamos mapa de colores recibido como parámetro
+        mapa_de_colores = mpl.cm.get_cmap(paleta)
+
+        # Creamos figura
+        ax = fig.add_axes([0.05, 0.05, 0.90, 0.03])
+
+        # Dibujamos equivalencia de la escala de colores
+        cb = mpl.colorbar.ColorbarBase(
+            ax, 
+            orientation='horizontal', 
+            cmap=mapa_de_colores,        
+            norm=mpl.colors.Normalize(minimo, maximo)
+        )
+
     # Salvamos la imagen del calendario.
     plt.savefig(fichero)
+    
+
+
