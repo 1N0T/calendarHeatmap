@@ -50,6 +50,7 @@ chm.calendar_heatmap(
     mostrar_valores=True,          # Además del código de color, se mostrará el valor numérico
     mostrar_dias=True,             # Se mostrará el día del mes en una esquina
     mostrar_escala_colores = True, # Mostramos la escala de colores
+    grosor_escala_colores = 0.05,  # Especificamos alto escala decolores
     zoom=1,                        # Número de veces que se quiere ampliar el tamaño de la imgen resultante
     paleta='Purples',              # Paleta de colores a utilizar (cualquier identificador válido de matplotlib)
     fichero='calendario.png'       # Nombre del fichero a crear. La extensión determinará el formato
@@ -59,5 +60,6 @@ chm.calendar_heatmap(
 ### Historial de versiones.
 | Versión | Descripción |
 |---------|-------------|
+| v1.0.2 | Corrección error cálculo calendario > 11 meses y añadida personalización alto escala de colores. |
 | v1.0.1 | Añadida visualización de escala de colores y personalización rango de valores. |
 | v1.0 | Versión inicial |
