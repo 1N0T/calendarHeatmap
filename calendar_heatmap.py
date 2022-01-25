@@ -15,6 +15,7 @@ def calendar_heatmap (
         mostrar_dias = True,
         mostrar_valores = True,
         mostrar_escala_colores = True,
+        grosor_escala_colores = 0.04,
         meses = 12,
         mes_inicial = 1,
         columnas = 4,
@@ -60,7 +61,7 @@ def calendar_heatmap (
     for mes in range(mes_inicial, mes_inicial + meses):
 
         # Controlamos a que año (desde el inicial) pertenece el mes en curso
-        year_delta = mes // 12 
+        year_delta = (mes - 1) // 12 
         mes = mes % 12 
         if mes == 0:
             mes = 12
@@ -156,7 +157,7 @@ def calendar_heatmap (
         mapa_de_colores = mpl.cm.get_cmap(paleta)
 
         # Creamos figura
-        ax = fig.add_axes([0.05, 0.05, 0.90, 0.03])
+        ax = fig.add_axes([0.05, 0.05, 0.90, grosor_escala_colores / filas])
 
         # Dibujamos equivalencia de la escala de colores
         cb = mpl.colorbar.ColorbarBase(
